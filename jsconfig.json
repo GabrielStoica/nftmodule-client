@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["src/components/index"],
+      "@components/*": ["src/components/*"],
+
+      "@config": ["src/config/index"],
+      "@config/*": ["src/config/*"],
+
+      "@services": ["src/services/index"],
+      "@services/*": ["src/services/*"],
+
+      "@providers": ["src/providers/index"],
+      "@providers/*": ["src/providers/*"],
+
+      "@store": ["redux/store"],
+      "@store/*": ["redux/*"],
+
+      "@redux-slicers": ["redux/store/slicers/index"],
+
+      "@utils": ["src/utils/index"],
+      "@utils/*": ["src/utils/*"]
+    }
+  }
+}
