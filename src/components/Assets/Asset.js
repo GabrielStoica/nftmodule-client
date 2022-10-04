@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { chains, convertHexToAbbreviation, shortAddress } from "@utils";
 import { DeleteAsset, EditAsset, MintAsset } from "@components";
+import { DeleteIcon, LinkIcon, SettingsIcon } from "@chakra-ui/icons";
 
 export const BlogAuthor = (props) => {
   return (
@@ -115,14 +116,17 @@ const Asset = (props) => {
             <Stack direction="row">
               {!minted && (
                 <Button size="sm" onClick={() => setMintAssetModalOpen(true)}>
+                  <LinkIcon mr={2} />
                   Mint
                 </Button>
               )}
               <Button size="sm" onClick={() => setDeleteAssetModalOpen(true)}>
+                <DeleteIcon mr={2} />
                 Delete
               </Button>
               {!minted && (
                 <Button size="sm" onClick={() => setEditAssetModalOpen(true)}>
+                  <SettingsIcon mr={2} />
                   Edit
                 </Button>
               )}

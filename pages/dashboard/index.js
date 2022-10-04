@@ -1,26 +1,58 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import { Asset, DashboardLayout, NoAssets, NewAsset } from "@components";
 import { AssetService, InfuraService } from "@services";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import DeleteAsset from "@components/Assets/DeleteAsset";
 import { BlockchainContext } from "@providers";
+import { PlusSquareIcon, SettingsIcon } from "@chakra-ui/icons";
 
 const DashboardHomePage = () => {
   const [assets, setAssets] = useState([]);
+  const toast = useToast();
 
   const [newAssetModalOpen, setNewAssetModalOpen] = useState(false);
   const { mintAsset } = useContext(BlockchainContext);
   const walletState = useSelector((state) => state.walletReducer);
   const router = useRouter();
 
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error notification",
+        description: `${error}`,
+        status: "error",
+        duration: 5000,
+        position: "bottom-right",
+        isClosable: true,
+      });
+      setError(null);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (success) {
+      toast({
+        title: "Asset notification",
+        description: `${success}`,
+        status: "success",
+        duration: 5000,
+        position: "bottom-right",
+        isClosable: true,
+      });
+      setSuccess(null);
+    }
+  }, [success]);
+
   const init = async () => {
     try {
       const owned_by = walletState?.public_address;
       const response = await AssetService.getByOwner(owned_by);
       setAssets(response);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -33,20 +65,18 @@ const DashboardHomePage = () => {
         title: values.title,
         description: values.description,
       };
-      //const response = await InfuraService.upload(JSON.stringify(metadata));
-
-      //send this reponse as tokenURI to mint() function in sc
-
       metadata.owned_by = walletState?.public_address;
       const response = await AssetService.create(metadata);
-      //add error
+
       if (response.status !== "ok") {
-        console.log(response);
+        setError("Unexpected error. Try again");
         return;
       }
+      setSuccess("Asset created successfully!");
       await init();
     } catch (error) {
       console.log(error);
+      setError("Unexpected error. Try again");
     }
   };
 
@@ -55,12 +85,14 @@ const DashboardHomePage = () => {
       const response = await AssetService.delete(id);
       //add error
       if (response.status !== "ok") {
-        console.log(response);
+        setError("Unexpected error. Try again");
         return;
       }
+      setSuccess("Asset deleted successfully!");
       await init();
     } catch (error) {
       console.log(error);
+      setError("Unexpected error. Try again");
     }
   };
 
@@ -69,12 +101,14 @@ const DashboardHomePage = () => {
       const response = await AssetService.update(id, values);
       //add error
       if (response.status !== "ok") {
-        console.log(response);
+        setError("Unexpected error. Try again");
         return;
       }
+      setSuccess("Asset updated successfully!");
       await init();
     } catch (error) {
       console.log(error);
+      setError("Unexpected error. Try again");
     }
   };
 
@@ -84,6 +118,7 @@ const DashboardHomePage = () => {
       await init();
     } catch (error) {
       console.log(error);
+      setError("Unexpected error. Try again");
     }
   };
 
@@ -107,7 +142,10 @@ const DashboardHomePage = () => {
     <DashboardLayout public_address={walletState?.public_address}>
       <Stack direction="row" justifyContent="space-between">
         <Heading as="h1">Your assets</Heading>
-        <Button onClick={() => setNewAssetModalOpen(true)}>Create new</Button>
+        <Button onClick={() => setNewAssetModalOpen(true)}>
+          <PlusSquareIcon mr={2} />
+          Create new
+        </Button>
       </Stack>
 
       {assets && assets.length ? (

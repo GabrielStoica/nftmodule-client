@@ -17,12 +17,13 @@
     "axios": "^0.27.2",
     "ethers": "^5.7.1",
     "framer-motion": "^7.5.1",
+    "ipfs-http-client": "^58.0.1",
     "next": "12.3.1",
+    "notistack": "^2.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.4",
     "web3modal": "^1.9.9",
-    "ipfs-http-client": "^58.0.1",
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
