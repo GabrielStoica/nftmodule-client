@@ -1,22 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## NFT Client Module
 
-## Getting Started
+The NFT Client module is a Next.js based app that facilitates the process of minting assets on the Rinkeby or Goerli networks using two pre-deployed ERC721-compatible smart contracts. It offers a range of features that streamline the asset creation process, including connectivity with MetaMask, automatic detection of wallet state (chain and address), and the ability to create, edit, and delete assets while storing them in a MongoDB Atlas cloud cluster. Check the [nftmodule-server](https://github.com/gabrielstoica/nftmodule-server) for the back-end workflow.
 
-First, run the development server:
+The app provides the following set of features:
+
+- connect using MetaMask;
+- detect wallet state(chain, address);
+- create, edit and delete new asset, storing in a MongoDB atlas cloud cluster;
+- upload asset image to IPFS using a Infura dedicated-gateway (find it below);
+- mint an asset on Rinkeby/Goerli networks based on 2 pre-deployed ERC721-compatible smart contracts;
+- when selecting the desired chain, the app is capable of detecting if your current network doesn't match with the selected one and request for changing it;
+
+## Usage
+
+Use the following command to run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Learn More
 
